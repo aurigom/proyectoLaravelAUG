@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class ContactoControllerAurigom extends Controller
+{
+    public function create()
+    {
+        return view('contacto');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nombre'     => 'required|min:3|max:50',
+            'email'      => 'required|email',
+            'asunto'     => 'required|min:5|max:50',
+            'mensaje'    => 'required|min:10|max:50',
+            'aceptacion' => 'accepted',
+        ]);
+        return redirect('/contacto')
+            ->with('exito', true)
+            ->with('nombre', $request->nombre)
+            ->with('asunto', $request->asunto);
+    }
+}
